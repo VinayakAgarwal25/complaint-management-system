@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">CMS</span>
+      <div>
+        <h1>Complaint Management</h1>
+        <p>DBMS dashboard</p>
+      </div>
+    </div>
+    <nav class="nav-tabs" aria-label="Application sections">
+      <button class="nav-tab active" data-view="dashboard">Dashboard</button>
+      <button class="nav-tab" data-view="complaints">Complaints</button>
+      <button class="nav-tab" data-view="departments">Departments</button>
+      <button class="nav-tab" data-view="new">Register</button>
+    </nav>
+  </aside>
+
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Oracle SQL + PL/SQL project</p>
+        <h2 id="page-title">Dashboard</h2>
+      </div>
+      <div class="top-actions">
+        <label class="search">
+          <span>Search</span>
+          <input id="search-input" type="search" placeholder="ID, user, department, issue">
+        </label>
+        <button class="primary-action" data-view-target="new">New complaint</button>
+      </div>
+    </header>
+
+    <section class="view active" id="dashboard-view" aria-labelledby="page-title">
+      <div class="metric-grid" id="metric-grid"></div>
+      <div class="dashboard-grid">
+        <section class="panel">
+          <div class="panel-heading">
+            <h3>Status overview</h3>
+            <span id="status-total"></span>
+          </div>
+          <div class="status-bars" id="status-bars"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-heading">
+            <h3>Priority mix</h3>
+            <span>Sample records</span>
+          </div>
+          <div class="priority-stack" id="priority-stack"></div>
+        </section>
+      </div>
+      <section class="panel">
+        <div class="panel-heading">
+          <h3>Recent complaints</h3>
+          <button class="ghost-action" data-view-target="complaints">View all</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Complainant</th>
+                <th>Department</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recent-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="complaints-view" aria-labelledby="page-title">
+      <section class="panel toolbar-panel">
+        <div class="filters">
+          <label>
+            Status
+            <select id="status-filter">
+              <option value="All">All</option>
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </label>
+          <label>
+            Priority
+            <select id="priority-filter">
+              <option value="All">All</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </label>
+          <label>
+            Department
+            <select id="department-filter">
+              <option value="All">All</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h3>Complaint records</h3>
+          <span id="complaint-count"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Complainant</th>
+                <th>Category</th>
+                <th>Department</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaint-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="departments-view" aria-labelledby="page-title">
+      <section class="panel">
+        <div class="panel-heading">
+          <h3>Department performance</h3>
+          <span>Grouped from complaint data</span>
+        </div>
+        <div class="department-list" id="department-list"></div>
+      </section>
+    </section>
+
+    <section class="view" id="new-view" aria-labelledby="page-title">
+      <section class="form-layout">
+        <form class="panel form-panel" id="complaint-form">
+          <div class="panel-heading">
+            <h3>Register complaint</h3>
+            <span>Browser demo</span>
+          </div>
+          <div class="form-grid">
+            <label>
+              Complainant
+              <select id="user-field" required></select>
+            </label>
+            <label>
+              Category
+              <select id="category-field" required></select>
+            </label>
+            <label>
+              Department
+              <select id="department-field" required></select>
+            </label>
+            <label>
+              Priority
+              <select id="priority-field" required>
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Description
+            <textarea id="description-field" rows="5" maxlength="500" required placeholder="Describe the issue clearly"></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="primary-action" type="submit">Register complaint</button>
+            <button class="ghost-action" type="reset">Clear</button>
+          </div>
+        </form>
+
+        <aside class="panel note-panel">
+          <h3>Database mapping</h3>
+          <p>The form mirrors the complaint table and the register_complaint PL/SQL procedure: user, category, department, description, priority, default status, and registration date.</p>
+          <dl>
+            <div><dt>Status</dt><dd>Defaults to Pending</dd></div>
+            <div><dt>ID</dt><dd>Uses the next available complaint number</dd></div>
+            <div><dt>History</dt><dd>Adds an initial Pending event</dd></div>
+          </dl>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog">
+    <div class="dialog-head">
+      <h3 id="detail-title">Complaint details</h3>
+      <button class="icon-button" id="close-dialog" aria-label="Close dialog">x</button>
+    </div>
+    <div id="detail-body"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
