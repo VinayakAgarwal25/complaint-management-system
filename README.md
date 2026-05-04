@@ -47,7 +47,7 @@ The current folder also includes a static browser dashboard demo built with HTML
 | `Complaint_Management_System_Report_final.docx` | Final report document. |
 | `README (1).md` | This project overview and execution guide. |
 
-> Note: The README has been updated to match the files currently present in this folder. Split scripts such as `01_create_tables.sql`, `02_insert_data.sql`, and `04_plsql.sql` are not present in the current project directory.
+
 
 ## 4. Database Schema
 
